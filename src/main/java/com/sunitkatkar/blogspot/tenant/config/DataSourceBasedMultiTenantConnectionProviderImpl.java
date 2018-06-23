@@ -107,19 +107,19 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl
 	 * @return tenantIdentifier
 	 */
 	private String initializeTenantIfLost(String tenantIdentifier) {
-		if (TenantContextHolder.getTenant() == null) {
+//		if (TenantContextHolder.getTenant() == null) {
+//
+//			SecurityContext securityContext = SecurityContextHolder.getContext();
+//			Authentication authentication = securityContext.getAuthentication();
+//			CustomUserDetails customUserDetails = null;
+//			if (authentication != null) {
+//				Object principal = authentication.getPrincipal();
+//				customUserDetails = principal instanceof CustomUserDetails ? (CustomUserDetails) principal : null;
+//			}
+//			TenantContextHolder.setTenantId(customUserDetails.getTenant());
+//		}
 
-			SecurityContext securityContext = SecurityContextHolder.getContext();
-			Authentication authentication = securityContext.getAuthentication();
-			CustomUserDetails customUserDetails = null;
-			if (authentication != null) {
-				Object principal = authentication.getPrincipal();
-				customUserDetails = principal instanceof CustomUserDetails ? (CustomUserDetails) principal : null;
-			}
-			TenantContextHolder.setTenantId(customUserDetails.getTenant());
-		}
-
-		// TenantContextHolder.setTenantId("tenant_1");
+		 TenantContextHolder.setTenantId("tenant_1");
 
 		if (tenantIdentifier != TenantContextHolder.getTenant()) {
 			tenantIdentifier = TenantContextHolder.getTenant();
