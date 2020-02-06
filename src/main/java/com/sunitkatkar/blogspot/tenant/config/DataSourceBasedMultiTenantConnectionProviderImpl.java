@@ -96,6 +96,15 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl
                         DataSourceUtil.createAndConfigureDataSource(masterTenant));
             }
         }
+            //check again if tenant exist in map after rescan master_db, if not, throw UsernameNotFoundException
+                    if (!this.dataSourcesMtApp.containsKey(tenantIdentifier)) {
+            LOG.warn("Trying to get tenant:" + tenantIdentifier + " which was not found in master db after rescan");
+            throw new UsernameNotFoundException(
+                    String.format(
+                            "Tenant not found after rescan, "
+                                    + " tenant=%s",
+                             tenantIdentifier));
+        }
         return this.dataSourcesMtApp.get(tenantIdentifier);
     }
 
