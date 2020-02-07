@@ -76,6 +76,13 @@ public class UserServiceImpl implements UserService {
     public User findByUsernameAndTenantname(String username, String tenant) {
         User user = userRepository.findByUsernameAndTenantname(username,
                 tenant);
+       if (user == null) {
+            throw new UsernameNotFoundException(
+                    String.format(
+                            "Username not found for domain, "
+                                    + "username=%s, tenant=%s",
+                            username, tenant));
+        }
         LOG.info("Found user with username:" + user.getUsername()
                 + " from tenant:" + user.getTenant());
         return user;
