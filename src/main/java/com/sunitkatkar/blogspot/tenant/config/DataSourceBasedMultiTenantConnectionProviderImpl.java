@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.sunitkatkar.blogspot.master.model.MasterTenant;
 import com.sunitkatkar.blogspot.master.repository.MasterTenantRepository;
@@ -92,6 +93,9 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl
             LOG.info(
                     ">>>> selectDataSource() -- tenant:" + tenantIdentifier + " Total tenants:" + masterTenants.size());
             for (MasterTenant masterTenant : masterTenants) {
+				if (this.dataSourcesMtApp.containsKey(masterTenant.getTenantId())) {
+					continue;
+				}
                 dataSourcesMtApp.put(masterTenant.getTenantId(),
                         DataSourceUtil.createAndConfigureDataSource(masterTenant));
             }
